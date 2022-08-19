@@ -12,6 +12,7 @@ then
 fi
 
 echo 'Starting the Setup for Local Websites'
+echo 'IF FIREWALL IS PROMPTED, allow BOTH public and private networks'
 
 echo ''
 echo 'Enter the website domain NAME (ex: google):'
@@ -27,6 +28,21 @@ echo ''
 echo "Setting up $WEBSITE_ADDRESS"
 
 echo ''
+mkdir -p /srv/www/$WEBSITE_ADDRESS/public_html
+mkdir /srv/www/$WEBSITE_ADDRESS/logs
+mkdir /srv/www/$WEBSITE_ADDRESS/ssl
+chown -R www-data:www-data /srv/www
+
+echo ''
 curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/testconf-nl -o $WEBSITE_DOMAIN_NAME.test.conf
 echo "" >> $WEBSITE_DOMAIN_NAME.test.conf
 
+sed -i "s/example/$WEBSITE_DOMAIN_NAME/g" $WEBSITE_DOMAIN_NAME.test.conf
+sed -i "s/.com/$WEBSITE_DOMAIN_EXTENSION/g" $WEBSITE_DOMAIN_NAME.test.conf
+
+mv $WEBSITE_DOMAIN_NAME.test.conf /etc/apache2/sites-available/
+
+echo ''
+a2ensite /etc/apache2/sites-available/$WEBSITE_DOMAIN_NAME.test.conf
+
+service apache2 restart
