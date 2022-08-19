@@ -219,6 +219,8 @@ service apache2 restart
 
 rm *-nl
 
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh
+
 echo 'Finished script!'
 echo 'If you want to setup any websites on your local, run: sudo bash website-setup.sh'
 echo "Don't forget to update the hosts file - check the hosts file header in the LAMP on local using WSL documentation"
