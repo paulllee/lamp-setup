@@ -38,7 +38,7 @@ curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/testconf-nl -o $
 echo "" >> $WEBSITE_DOMAIN_NAME.test.conf
 
 sed -i "s/example/$WEBSITE_DOMAIN_NAME/g" $WEBSITE_DOMAIN_NAME.test.conf
-sed -i "s/.com/$WEBSITE_DOMAIN_EXTENSION/g" $WEBSITE_DOMAIN_NAME.test.conf
+sed -i "s/.extension/$WEBSITE_DOMAIN_EXTENSION/g" $WEBSITE_DOMAIN_NAME.test.conf
 
 mv $WEBSITE_DOMAIN_NAME.test.conf /etc/apache2/sites-available/
 
