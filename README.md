@@ -36,23 +36,23 @@ If you are using websites that were previously set up on your local, make sure t
 
 # LAMP Setup Installation
 
-Run the following commands in order to download and run the LAMP setup script!
+Run the following commands to download and run the LAMP setup script!
 
-`cd`
-
-`curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/setup.sh -o setup.sh`
-
-`sudo bash setup.sh`
+```
+cd
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/setup.sh -o setup.sh
+sudo bash setup.sh
+```
 
 # Example Website Installation
 
-Run the following commands in order to download and run the website setup script!
+Run the following commands to download and run the website setup script!
 
-`cd`
-
-`curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh`
-
-`sudo bash website-setup.sh`
+```
+cd
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh
+sudo bash website-setup.sh
+```
 
 # hosts file
 
