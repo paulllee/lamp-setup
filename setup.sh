@@ -2,12 +2,12 @@
 
 # Author: Paul Lee
 # Company: Lyquix
-# Description: Automate the installation for the LAMP Environment on WSL
+# Description: Automate the installation for the LAMP Environment on WSL Ubuntu 18.04.5
 
 if [ $EUID != 0 ]
 then
 	echo "please run this script as root, for example:"
-	echo "sudo bash lamp-ubuntu18.sh"
+	echo "sudo bash setup.sh"
   exit
 fi
 
@@ -43,8 +43,14 @@ do
         then
                 echo 'Error: Invalid Windows name'
         fi
-echo 'Please type in your Windows name as shown in the file system (case sensitive):'
-read YOUR_WINDOWS_NAME
+        echo 'Please type in your Windows name as shown in the file system (case sensitive):'
+        read YOUR_WINDOWS_NAME
+        if [ "$YOUR_WINDOWS_NAME" == '' ]
+        then
+                YOUR_WINDOWS_NAME=NULL
+        fi
+        VALIDNAME=FALSE
+done
 
 echo 'Making the www directory in the Documents directory'
 if [ -d /mnt/c/Users/$YOUR_WINDOWS_NAME/Documents/www/ ]
