@@ -145,7 +145,7 @@ mysql --user="root" --password="ubuntu" --execute="CREATE DATABASE $DATABASE_NAM
 mysql --user="root" --password="ubuntu" --execute="CREATE USER '$DATABASE_USER'@localhost IDENTIFIED BY '$DATABASE_PASS';"
 mysql --user="root" --password="ubuntu" --execute="GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@localhost;"
 
-mysql --user="$DATABASE_USER" -password="$DATABASE_PASS" < $SQL_FILE
+mysql --user="$DATABASE_USER" --password="$DATABASE_PASS" --database="$DATABASE_NAME" < $SQL_FILE
 
 cd
 
