@@ -139,4 +139,74 @@ sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/' /etc/php/7.2/apac
 
 sed -i 's/Require all denied/Require all granted/g' /etc/apache2/mods-available/php7.2.conf
 
+echo 'Installing MySQL'
+curl -o /etc/profile.d/wsl-integration.sh https://raw.githubusercontent.com/canonical/ubuntu-wsl-integration/master/wsl-integration.sh
+apt-get -y install mysql-server mysql-client
+
+sudo chmod 755 /var/lib/mysql/mysql
+sudo usermod -d /var/lib/mysql/ mysql
+service mysql restart
+
+echo ''
+echo ''
+echo ''
+echo ''
+echo ''
+
+echo 'password = ubuntu'
+echo 'Enter the MySQL password below'
+mysql --user="root" --password --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'ubuntu';"
+
+while [ ! "$?" -eq 0 ]
+do
+	echo ''
+	echo 'password = ubuntu'
+	echo 'Enter the MySQL password below'
+	mysql --user="root" --password --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'ubuntu';"
+done 
+
+echo 'Starting the mysql_secure_installation'
+# Enter password for user root: ubuntu
+# VALIDATE PASSWORD PLUGIN: N
+# Change the password for root: N
+# Remove anonymous user: Y
+# Disallow root connect remotely: Y
+# Remove test database: Y
+# Reload privilege tables: Y
+
+apt-get -y install expect
+
+SECURE_MYSQL=$(expect -c "
+set timeout 10
+spawn mysql_secure_installation
+expect \"Enter password for user root:\"
+send \"ubuntu\r\"
+expect \"Press y|Y for Yes, any other key for No:\"
+send \"n\r\"
+expect \"Change the password for root ? ((Press y|Y for Yes, any other key for No) :\"
+send \"n\r\"
+expect \"Remove anonymous users? (Press y|Y for Yes, any other key for No) :\"
+send \"y\r\"
+expect \"Disallow root login remotely? (Press y|Y for Yes, any other key for No) :\"
+send \"y\r\"
+expect \"Remove test database and access to it? (Press y|Y for Yes, any other key for No) :\"
+send \"y\r\"
+expect \"Reload privilege tables now? (Press y|Y for Yes, any other key for No) :\"
+send \"y\r\"
+expect eof
+")
+
+echo "$SECURE_MYSQL"
+
+apt-get -y remove expect
+
+echo 'Configuring MySQL files'
+
+sed -i 's/#table_open_cache/table_open_cache/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i 's/#slow_query_log/slow_query_log/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i 's/#slow_query_log_file/slow_query_log_file/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sed -i 's/#long_query_time = 2/long_query_time = 1/' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+service mysql restart
+
 # after script is complete, add a for loop removing the files
