@@ -34,6 +34,10 @@ do
     echo 'Can you verify that the credentials above is correct?'
     echo 'YES for correct / NO for not correct (case sensitive):'
     read USER_VERIFIED
+    if [ "$USER_VERIFIED" == '' ]
+        then
+            USER_VERIFIED=NO
+    fi
 done
 
 WEBSITE_ADDRESS=$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION
@@ -129,6 +133,10 @@ do
     echo 'Can you verify that the credentials above is correct?'
     echo 'YES for correct / NO for not correct (case sensitive):'
     read USER_VERIFIED
+    if [ "$USER_VERIFIED" == '' ]
+        then
+                USER_VERIFIED=NO
+    fi
 done
 
 cd /srv/www/$WEBSITE_ADDRESS/
