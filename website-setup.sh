@@ -158,8 +158,9 @@ echo 'If you just installed a WordPress site, additional steps need to be taken 
 echo '1. Download Search-Replace-DB and put it in the root public_html directory'
 echo "2. Go to the $WEBSITE_DOMAIN_NAME.test/Search-Replace-DB url."
 echo '3. Change all instances of the url for dev for the test url and protocol'
+echo ''
 echo 'for example (do these separately):'
-echo "dev.$WEBSITE_DOMAIN_NAME.$WEBSITE_DOMAIN_EXTENSION → $WEBSITE_DOMAIN_NAME.test"
+echo "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION → $WEBSITE_DOMAIN_NAME.test"
 echo "https://$WEBSITE_DOMAIN_NAME.test → http://$WEBSITE_DOMAIN_NAME.test"
 echo ''
 echo "If there are any errors, you can ignore them. They don't affect the search and replace."
