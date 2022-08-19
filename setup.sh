@@ -220,5 +220,5 @@ service apache2 restart
 rm *-nl
 
 echo 'Finished script!'
-echo 'Look at the LAMP on local using WSL documentation and skip to the Example Website Installation header'
-echo "Don't forget to change the hosts file - check the hosts file header in the documentation"
+echo 'If you want to setup any websites on your local, run: sudo bash website-setup.sh'
+echo "Don't forget to update the hosts file - check the hosts file header in the LAMP on local using WSL documentation"
