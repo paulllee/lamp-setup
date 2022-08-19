@@ -215,4 +215,10 @@ sed -i 's/#long_query_time = 2/long_query_time = 1/' /etc/mysql/mysql.conf.d/mys
 
 service mysql restart
 
-# after script is complete, add a for loop removing the files
+service apache2 restart
+
+rm *-nl
+
+echo 'Finished script!'
+echo 'Look at the LAMP on local using WSL documentation and skip to the Example Website Installation header'
+echo "Don't forget to change the hosts file - check the hosts file header in the documentation"
