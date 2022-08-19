@@ -43,6 +43,11 @@ sed -i "s/.com/$WEBSITE_DOMAIN_EXTENSION/g" $WEBSITE_DOMAIN_NAME.test.conf
 mv $WEBSITE_DOMAIN_NAME.test.conf /etc/apache2/sites-available/
 
 echo ''
-a2ensite /etc/apache2/sites-available/$WEBSITE_DOMAIN_NAME.test.conf
+cd /etc/apache2/sites-available/
+a2ensite $WEBSITE_DOMAIN_NAME.test.conf
 
 service apache2 restart
+
+cd ~
+
+echo "Returned to Home directory. Finished setting up $WEBSITE_ADDRESS"
