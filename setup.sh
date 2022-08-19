@@ -95,7 +95,8 @@ a2enmod expires headers rewrite ssl suphp mpm_prefork php
 
 echo 'Updating config files'
 
-PCKGS=("apache2conf-nl" "deflateconf-nl" "mimeconf-nl" "apache2-nl")
+# Installing all supplemental files from the repository including the website-setup.sh script
+PCKGS=("apache2conf-nl" "deflateconf-nl" "mimeconf-nl" "apache2-nl" "website-setup.sh")
 for PCKG in "${PCKGS[@]}"
 do
 	curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/${PCKG} -o ${PCKG}
@@ -208,8 +209,6 @@ service mysql restart
 service apache2 restart
 
 rm *-nl
-
-curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh
 
 echo 'Finished script!'
 echo 'If you want to setup any websites on your local, run: sudo bash website-setup.sh'
