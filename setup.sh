@@ -159,17 +159,7 @@ echo ''
 echo ''
 echo ''
 
-echo 'password = ubuntu'
-echo 'Enter the MySQL password below'
-mysql --user="root" --password --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'ubuntu';"
-
-while [ ! "$?" -eq 0 ]
-do
-	echo ''
-	echo 'password = ubuntu'
-	echo 'Enter the MySQL password below'
-	mysql --user="root" --password --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'ubuntu';"
-done 
+mysql --user="root" --password="ubuntu" --execute="ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'ubuntu';"
 
 echo 'Starting the mysql_secure_installation'
 # Enter password for user root: ubuntu
