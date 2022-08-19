@@ -73,7 +73,13 @@ done
 a2enmod expires headers rewrite ssl suphp mpm_prefork php
 
 echo 'Updating config files'
-# add a curl download or wget download of the apache2conf-nl, deflateconf-nl, mimeconf-nl, apache2-nl files
+
+PCKGS=("apache2conf-nl" "deflateconf-nl" "mimeconf-nl" "apache2-nl")
+for PCKG in "${PCKGS[@]}"
+do
+	curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/${PCKG} -o ${PCKG}
+	echo "" >> ${PCKG}
+done
 
 sed -i 's/Timeout 300/Timeout 60/' /etc/apache2/apache2.conf
 sed -i 's/MaxKeepAliveRequests 100/MaxKeepAliveRequests 0/' /etc/apache2/apache2.conf
@@ -108,3 +114,5 @@ for PCKG in "${PCKGS[@]}"
 do
 	apt-get -y install ${PCKG}
 done
+
+# after script is complete, add a for loop removing the files
