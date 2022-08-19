@@ -103,10 +103,6 @@ do
 	echo "" >> ${PCKG}
 done
 
-# Also installing website-setup.sh script
-curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh
-echo "" >> website-setup.sh
-
 sed -i 's/Timeout 300/Timeout 60/' /etc/apache2/apache2.conf
 sed -i 's/MaxKeepAliveRequests 100/MaxKeepAliveRequests 0/' /etc/apache2/apache2.conf
 sed -i '/<Directory \/srv\/>/{
@@ -215,5 +211,9 @@ service apache2 restart
 rm *-nl
 
 echo 'Finished script!'
-echo 'If you want to setup any websites on your local, run: sudo bash website-setup.sh'
-echo "Don't forget to update the hosts file - check the hosts file header in the LAMP on local using WSL documentation"
+echo 'If you want to setup any websites on your local, run:'
+echo ''
+echo 'curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh'
+echo 'sudo bash website-setup.sh'
+echo ''
+echo "Don't forget to update the hosts file - check the hosts file header in the README on the repository."
