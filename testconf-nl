@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+        ServerName example.test
+        DocumentRoot /srv/www/example.com/public_html/
+        ErrorLog /srv/www/example.com/logs/error.log
+        CustomLog /srv/www/example.com/logs/access.log combined
+</VirtualHost>
