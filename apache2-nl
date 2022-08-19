@@ -1,0 +1,16 @@
+/srv/www/*/logs/access.log {
+        monthly
+        missingok
+        rotate 12
+        compress
+        notifempty
+        create 644 www-data www-data
+}
+/srv/www/*/logs/error.log {
+        size 100M
+        missingok
+        rotate 4
+        compress
+        notifempty
+        create 644 www-data www-data
+}

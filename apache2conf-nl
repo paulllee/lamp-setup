@@ -1,0 +1,42 @@
+<Directory /srv/www/>
+        Options +FollowSymLinks -Indexes -Includes
+        AllowOverride all
+        Require all granted
+        Header set Access-Control-Allow-Origin "*"
+        Header set Timing-Allow-Origin: "*"
+        Header set X-Content-Type-Options "nosniff"
+        Header set X-Frame-Options sameorigin
+        Header unset X-Powered-By
+        Header set X-UA-Compatible "IE=edge"
+        Header set X-XSS-Protection "1; mode=block"
+        # Disable unused HTTP request methods
+        <LimitExcept GET POST HEAD>
+                deny from all
+        </LimitExcept>
+</Directory>
+
+# Disable HTTP 1.0
+RewriteEngine On
+RewriteCond %{THE_REQUEST} !HTTP/1.1$
+RewriteRule .* - [F]
+
+# Disable Trace HTTP request
+TraceEnable off
+
+# Disable SSL v2 & v3
+SSLProtocol -all +TLSv1.2 +TLSv1.3
+
+# Disable server signature
+ServerSignature Off
+ServerTokens Prod
+
+# Browser Caching #
+ExpiresActive On
+ExpiresDefault "access plus 30 days"
+ExpiresByType text/html "access plus 15 minutes"
+Header unset Last-Modified
+Header unset ETag
+FileETag None
+
+AcceptFilter http none
+AcceptFilter https none

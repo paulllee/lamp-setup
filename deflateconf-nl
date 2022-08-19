@@ -1,0 +1,6 @@
+                AddOutputFilterByType DEFLATE image/svg+xml
+                AddOutputFilterByType DEFLATE application/x-font-woff
+                AddOutputFilterByType DEFLATE application/x-font-woff2
+                AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+                AddOutputFilterByType DEFLATE application/x-font-ttf
+                AddOutputFilterByType DEFLATE application/x-font-otf
