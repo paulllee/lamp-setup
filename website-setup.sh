@@ -21,4 +21,8 @@ read WEBSITE_DOMAIN_EXTENSION
 
 WEBSITE_ADDRESS=$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION
 
-echo $WEBSITE_ADDRESS
+echo "Setting up $WEBSITE_ADDRESS"
+
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/testconf-nl -o $WEBSITE_DOMAIN_NAME.test.conf
+echo "" >> $WEBSITE_DOMAIN_NAME.test.conf
+
