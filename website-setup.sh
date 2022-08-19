@@ -15,12 +15,26 @@ echo 'Starting the Setup for Local Websites'
 echo 'IF FIREWALL IS PROMPTED, allow BOTH public and private networks'
 
 echo ''
-echo 'Enter the website domain NAME (ex: google):'
-read WEBSITE_DOMAIN_NAME
+echo "I will ask you to verify that the credentials are correct at the end if you mess up."
 
-echo ''
-echo 'Enter the website domain EXTENSION including the period (ex: .com):'
-read WEBSITE_DOMAIN_EXTENSION
+USER_VERIFIED=NO
+while [ "$USER_VERIFIED" != 'YES' ]
+do
+    echo ''
+    echo 'Enter the production website domain NAME (ex: google):'
+    read WEBSITE_DOMAIN_NAME
+
+    echo ''
+    echo 'Enter the production website domain EXTENSION including the period (ex: .com):'
+    read WEBSITE_DOMAIN_EXTENSION
+
+    echo ''
+    echo "WEBSITE DOMAIN NAME=$WEBSITE_DOMAIN_NAME"
+    echo "WEBSITE DOMAIN EXTENSION=$WEBSITE_DOMAIN_EXTENSION"
+    echo 'Can you verify that the credentials above is correct?'
+    echo 'YES for correct / NO for not correct (case sensitive):'
+    read USER_VERIFIED
+done
 
 WEBSITE_ADDRESS=$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION
 
@@ -85,12 +99,12 @@ echo ''
 echo "Press Enter if you confirm the sql file is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
 read USER_CHECKPOINT
 
+echo ''
+echo "I will ask you to verify that the credentials are correct at the end if you mess up."
+
 USER_VERIFIED=NO
 while [ "$USER_VERIFIED" != 'YES' ]
 do
-    echo ''
-    echo "If you mess up at any of these following steps, don't worry, I will ask to verify that the credentials are correct."
-
     echo ''
     echo 'Type in the MySQL database name for this site:'
     read DATABASE_NAME
@@ -108,7 +122,11 @@ do
     read SQL_FILE
 
     echo ''
-    echo 'Can you verify that all of the credentials you typed in are correct?'
+    echo "DATABASE NAME=$DATABASE_NAME"
+    echo "DATABASE USERNAME=$DATABASE_USER"
+    echo "DATABASE PASSWORD=$DATABASE_PASS"
+    echo "SQL FILE NAME=$SQL_FILE"
+    echo 'Can you verify that the credentials above is correct?'
     echo 'YES for correct / NO for not correct (case sensitive):'
     read USER_VERIFIED
 done
