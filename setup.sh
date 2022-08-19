@@ -28,6 +28,21 @@ fi
 chown -R www-data:www-data /var/www
 chsh -s /bin/bash www-data
 
+echo ''
+echo ''
+echo ''
+echo ''
+
+YOUR_WINDOWS_NAME=NULL
+VALIDNAME=TRUE
+
+while [ ! -d /mnt/c/Users/$YOUR_WINDOWS_NAME/ ]
+do
+        echo ''
+        if [ "$VALIDNAME" == 'FALSE' ]
+        then
+                echo 'Error: Invalid Windows name'
+        fi
 echo 'Please type in your Windows name as shown in the file system (case sensitive):'
 read YOUR_WINDOWS_NAME
 
