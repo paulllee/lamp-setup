@@ -34,7 +34,7 @@ mkdir /srv/www/$WEBSITE_ADDRESS/ssl
 chown -R www-data:www-data /srv/www
 
 echo ''
-curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/testconf-nl -o $WEBSITE_DOMAIN_NAME.test.conf
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/config-templates/testconf-nl -o $WEBSITE_DOMAIN_NAME.test.conf
 echo "" >> $WEBSITE_DOMAIN_NAME.test.conf
 
 sed -i "s/example/$WEBSITE_DOMAIN_NAME/g" $WEBSITE_DOMAIN_NAME.test.conf
