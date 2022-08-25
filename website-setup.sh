@@ -6,9 +6,9 @@
 
 if [ $EUID != 0 ]
 then
-	echo "please run this script as root, for example:"
-	echo "sudo bash website-setup.sh"
-  exit
+    echo "please run this script as root, for example:"
+    echo "sudo bash website-setup.sh"
+    exit
 fi
 
 echo 'Starting the Setup for Local Websites'
@@ -35,8 +35,8 @@ do
     echo 'YES for correct / NO for not correct (case sensitive):'
     read USER_VERIFIED
     if [ "$USER_VERIFIED" == '' ]
-        then
-            USER_VERIFIED=NO
+    then
+        USER_VERIFIED=NO
     fi
 done
 
@@ -134,8 +134,8 @@ do
     echo 'YES for correct / NO for not correct (case sensitive):'
     read USER_VERIFIED
     if [ "$USER_VERIFIED" == '' ]
-        then
-                USER_VERIFIED=NO
+    then
+        USER_VERIFIED=NO
     fi
 done
 
