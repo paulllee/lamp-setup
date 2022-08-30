@@ -11,7 +11,7 @@ then
 	exit
 fi
 
-version="$lsb_release -sr"
+version="$(lsb_release -sr)"
 if [ $version == '22.04' ]
 then
 	echo "Ubuntu $version is not supported"
