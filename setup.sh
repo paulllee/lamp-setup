@@ -11,6 +11,14 @@ then
 	exit
 fi
 
+version="$lsb_release -sr"
+if [ $version == '22.04' ]
+then
+	echo "Ubuntu $version is not supported"
+	echo "please run on Ubuntu 18.04 or 20.04"
+	exit
+fi
+
 echo 'Starting the setup for the Local LAMP Development Environment for Ubuntu 18.04.5 LTS - WSL'
 
 echo 'Checking for updates then upgrading'
@@ -207,6 +215,8 @@ sed -i 's/#long_query_time = 2/long_query_time = 1/' /etc/mysql/mysql.conf.d/mys
 service mysql restart
 
 service apache2 restart
+
+sudo apt autoremove
 
 rm *-nl
 
