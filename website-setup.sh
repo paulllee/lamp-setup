@@ -71,7 +71,7 @@ cd
 echo "Returning to Home directory; finished setting up the apache2 configuration files for $WEBSITE_ADDRESS"
 
 HAS_DATABASE=NULL
-while [ "$HAS_DATABASE" != 'YES' -o "$HAS_DATABASE" != 'NO' ]
+while [ "$HAS_DATABASE" != 'YES' ] && [ "$HAS_DATABASE" != 'NO' ]
 do
     echo ''
     echo "Does $WEBSITE_ADDRESS have a Content Management System (CMS) or require a database?"
@@ -90,7 +90,7 @@ echo ''
 echo 'When you are done press Enter'
 read USER_CHECKPOINT
 
-if ["$HAS_DATABASE" == 'YES']
+if [ "$HAS_DATABASE" == 'YES' ]
 then
     echo ''
     echo 'Then open up PuTTY or Windows Terminal and SSH as root on the client side (check passwork for credentials)'
@@ -109,7 +109,7 @@ then
 fi
 
 echo ''
-if ["$HAS_DATABASE" == 'YES']
+if [ "$HAS_DATABASE" == 'YES' ]
 then
     echo "FTP (using FileZilla) and download the sql file and other necessary files to the www/$WEBSITE_ADDRESS/ directory."
 else
@@ -121,7 +121,7 @@ echo ''
 echo 'When you are done press Enter'
 read USER_CHECKPOINT
 
-if ["$HAS_DATABASE" == 'YES']
+if [ "$HAS_DATABASE" == 'YES' ]
 then
     echo ''
     echo "Press Enter if you confirm the sql file is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
