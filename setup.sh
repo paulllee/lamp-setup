@@ -12,10 +12,10 @@ then
 fi
 
 version="$(lsb_release -sr)"
-if [ $version == '22.04' ]
+if [ $version != '18.04' ]
 then
 	echo "Ubuntu $version is not supported"
-	echo "please run on Ubuntu 18.04 or 20.04"
+	echo "please run on Ubuntu 18.04.5 LTS - WSL"
 	exit
 fi
 
@@ -216,7 +216,7 @@ service mysql restart
 
 service apache2 restart
 
-sudo apt autoremove
+sudo apt-get -y autoremove
 
 rm *-nl
 
