@@ -113,8 +113,8 @@ if [ "$HAS_DATABASE" == 'YES' ]
 then
     echo "FTP (using FileZilla) into the server as www-data user: download the sql file to the www/$WEBSITE_ADDRESS/ directory"
     echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
-    echo "Make sure to have at least the .htaccess, wp-config.php (if WordPress), and configuration.php (if Joomla)"
-    echo 'Look through the .htaccess, wp-config.php (if WordPress), and configuration.php (if Joomla) files and modify the values to work for your local (ex: check any forcing for ssl, any directory paths...)'
+    echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
+    echo 'Look through the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla) files and modify the values to work for your local if needed (ex: check any forcing for ssl, any directory paths...)'
 else
     echo "FTP (using FileZilla) into the server as www-data user: use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory" 
     echo 'Look through the .htaccess file and modify the values to work for your local (ex: check any forcing for ssl...)'
