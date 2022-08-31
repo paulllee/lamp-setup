@@ -23,6 +23,7 @@ If you are using websites that were previously set up on your local, make sure t
 1. Open Turn Windows features on and off:
    - Disable HYPER-V (*HYPER-V breaks WordPress sites*)
    - Disable HYPER-V Platform
+   - Enable Virtual Machine Platform
    - Enable Windows Subsystem for Linux
    
 2. Restart the computer.
