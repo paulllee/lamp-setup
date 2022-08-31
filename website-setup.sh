@@ -15,7 +15,7 @@ echo 'Starting the Setup for Local Websites'
 echo 'IF FIREWALL IS PROMPTED, allow BOTH public and private networks'
 
 echo ''
-echo "I will ask you to verify that the credentials are correct at the end if you mess up."
+echo "I will ask you to verify that the credentials are correct at the end if you mess up"
 
 USER_VERIFIED=NO
 while [ "$USER_VERIFIED" != 'YES' ]
@@ -111,13 +111,14 @@ fi
 echo ''
 if [ "$HAS_DATABASE" == 'YES' ]
 then
-    echo "FTP (using FileZilla) and download the sql file to the www/$WEBSITE_ADDRESS/ directory."
-    echo "Download any other necessary files (ex: .htaccess, wp-config.php, configuration.php) to the www/$WEBSITE_ADDRESS/public_html/ directory"
+    echo "FTP (using FileZilla) into the server as www-data user: download the sql file to the www/$WEBSITE_ADDRESS/ directory"
+    echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
+    echo "Make sure to have at least the .htaccess, wp-config.php (if WordPress), and configuration.php (if Joomla)"
+    echo 'Look through the .htaccess, wp-config.php (if WordPress), and configuration.php (if Joomla) files and modify the values to work for your local (ex: check any forcing for ssl, any directory paths...)'
 else
-    echo "FTP (using FileZilla) and download the necessary files (ex: .htaccess) to the www/$WEBSITE_ADDRESS/public_html/ directory." 
+    echo "FTP (using FileZilla) into the server as www-data user: use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory" 
+    echo 'Look through the .htaccess file and modify the values to work for your local (ex: check any forcing for ssl...)'
 fi
-echo 'Look through the htaccess and configuration.php files and modify the values to work for your local (ex: check any forcing for ssl, any directory paths...).'
-echo 'Also look through the gitignore file and download all of the files (a majority is media files) that have been ignored to your local.'
 echo ''
 echo 'When you are done press Enter'
 read USER_CHECKPOINT
@@ -129,7 +130,7 @@ then
     read USER_CHECKPOINT
 
     echo ''
-    echo "I will ask you to verify that the credentials are correct at the end if you mess up."
+    echo "I will ask you to verify that the credentials are correct at the end if you mess up"
 
     USER_VERIFIED=NO
     while [ "$USER_VERIFIED" != 'YES' ]
