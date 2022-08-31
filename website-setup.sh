@@ -112,9 +112,9 @@ echo ''
 if [ "$HAS_DATABASE" == 'YES' ]
 then
     echo "FTP (using FileZilla) and download the sql file to the www/$WEBSITE_ADDRESS/ directory."
-    echo "Download any other necessary files (like .htaccess) to the www/$WEBSITE_ADDRESS/public_html/ directory"
+    echo "Download any other necessary files (ex: .htaccess, wp-config.php, configuration.php) to the www/$WEBSITE_ADDRESS/public_html/ directory"
 else
-    echo "FTP (using FileZilla) and download the necessary files (like .htaccess) to the www/$WEBSITE_ADDRESS/public_html/ directory." 
+    echo "FTP (using FileZilla) and download the necessary files (ex: .htaccess) to the www/$WEBSITE_ADDRESS/public_html/ directory." 
 fi
 echo 'Look through the htaccess and configuration.php files and modify the values to work for your local (ex: check any forcing for ssl, any directory paths...).'
 echo 'Also look through the gitignore file and download all of the files (a majority is media files) that have been ignored to your local.'
