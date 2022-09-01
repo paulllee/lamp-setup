@@ -34,7 +34,11 @@ If you are using websites that were previously set up on your local, make sure t
      - Enter new UNIX username: `ubuntu`
      - New password: `ubuntu`
      - Retype new password: `ubuntu`
-
+     
+4. **Important:** Make sure you are on WSL Version 1.
+     - To check, Open Windows Terminal and run `wsl -l -v`
+       - If you are NOT on Version 1, run `wsl --set-version Ubuntu-18.04 1`
+     - In our use case, WSL Version 1 is ideal since our websites are stored in the Windows file system which runs faster over WSL Version 2.
 # LAMP Setup Installation
 
 Run the following commands to download and run the LAMP setup script!
