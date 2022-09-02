@@ -16,7 +16,7 @@ This may seem redundant but is needed for WordPress sites:
 
 `sudo service apache2 restart`
 
-## Multiple Instances of Ubuntu
+### Multiple Instances of Ubuntu
 
 If you decide to run multiple instances of Ubuntu, I highly recommend only running **ONE** instance at a time.
 
