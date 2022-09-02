@@ -6,7 +6,7 @@ a lamp environment setup script on Ubuntu WSL1 for Lyquix
 
 # Important Information
 
-You have to run these commands (separately) every time you reboot your computer:
+You have to run these commands (separately) every time you reboot your computer or change your instance of Ubuntu to a different version:
 
 `sudo service mysql start`
 
