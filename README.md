@@ -1,6 +1,6 @@
 # LAMP Web Development Enviroment
 
-a lamp environment setup script on Ubuntu 18.04.5 WSL for Lyquix
+a lamp environment setup script on Ubuntu WSL1 for Lyquix
 
 # Important Information
 
@@ -20,7 +20,7 @@ If you are using websites that were previously set up on your local, make sure t
 
 # Prerequisites
 
-1. Open Turn Windows features on and off:
+1. Open **Turn Windows features on and off**:
    - Disable HYPER-V (*HYPER-V breaks WordPress sites*)
    - Disable HYPER-V Platform
    - Enable Virtual Machine Platform
@@ -28,13 +28,17 @@ If you are using websites that were previously set up on your local, make sure t
    
 2. Restart the computer.
 
-3. Install “Ubuntu 18.04.5 LTS” from the Microsoft Store.
+3. Install **Ubuntu \_\_.\_\_.\_ LTS** from the **Microsoft Store**.
    - Open up the application and wait a few minutes.
    - Once a prompt appears, input the following:
      - Enter new UNIX username: `ubuntu`
      - New password: `ubuntu`
      - Retype new password: `ubuntu`
-
+     
+4. **Important:** Make sure you are on WSL Version 1.
+     - To check, Open Windows Terminal and run `wsl -l -v`
+       - If the version of Ubuntu you are installing is NOT on Version 1, run `wsl --set-version Ubuntu-__.__ 1`
+     - In our use case, WSL Version 1 is ideal since our websites are stored in the Windows file system which runs faster over WSL Version 2.
 # LAMP Setup Installation
 
 Run the following commands to download and run the LAMP setup script!
