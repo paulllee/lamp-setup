@@ -2,7 +2,7 @@
 
 # Author: Paul Lee
 # Company: Lyquix
-# Description: Automate the installation for the LAMP Environment on WSL Ubuntu 18.04.5
+# Description: Automate the installation for the LAMP Environment on WSL Ubuntu WSL1
 
 if [ $EUID != 0 ]
 then
@@ -12,15 +12,15 @@ then
 fi
 
 version="$(lsb_release -sr)"
-if [ $version != '18.04' ]
-then
-	echo "Ubuntu $version is not supported"
-	echo "please run on Ubuntu 18.04.5 LTS - WSL"
-	exit
-fi
+echo "Starting the setup for the Local LAMP Development Environment for Ubuntu $version - WSL1"
 
-echo 'Starting the setup for the Local LAMP Development Environment for Ubuntu 18.04.5 LTS - WSL'
+echo ''
+echo 'Please make sure you are on WSL Version 1 by going into Windows Terminal and running: wsl -l -v'
+echo 'If it is not on WSL Version 1, run: wsl --set-version Ubuntu-__.__ 1'
+echo 'If you are on WSL Version 1, press Enter'
+read USER_CHECKPOINT
 
+echo ''
 echo 'Checking for updates then upgrading'
 apt-get update && apt-get -y upgrade
 
@@ -86,6 +86,8 @@ do
 	apt-get -y install ${PCKG}
 done
 
+# Update Node.js when version 16 is no longer maintained
+# It is scheduled to end in the 4th quarter of 2023
 echo 'Installing Node.js version 16'
 wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 
@@ -155,7 +157,13 @@ sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/' /etc/php/7.2/apac
 sed -i 's/Require all denied/Require all granted/g' /etc/apache2/mods-available/php7.2.conf
 
 echo 'Installing MySQL'
-curl -o /etc/profile.d/wsl-integration.sh https://raw.githubusercontent.com/canonical/ubuntu-wsl-integration/master/wsl-integration.sh
+
+version="$(lsb_release -sr)"
+if [ $version = '18.04' ]
+then
+	curl -o /etc/profile.d/wsl-integration.sh https://raw.githubusercontent.com/canonical/ubuntu-wsl-integration/master/wsl-integration.sh
+fi
+
 apt-get -y install mysql-server mysql-client
 
 sudo chmod 755 /var/lib/mysql/mysql
