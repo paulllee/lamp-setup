@@ -16,6 +16,12 @@ This may seem redundant but is needed for WordPress sites:
 
 `sudo service apache2 restart`
 
+## Multiple Instances of Ubuntu
+
+If you decide to run multiple instances of Ubuntu, I highly recommend only running **ONE** instance at a time.
+
+Before opening a new instance, you should terminate ALL running instances of Ubuntu by using `wsl --shutdown` in Windows Terminal (PowerShell or CMD).
+
 # Before You Start
 
 If you are using websites that were previously set up on your local, make sure to create a backup of **ALL** databases.
@@ -30,7 +36,7 @@ If you are using websites that were previously set up on your local, make sure t
    
 2. Restart the computer.
 
-3. Open Windows Terminal and run `wsl --set-default-version 1` to set future WSL installations to Version 1.
+3. Open Windows Terminal (PowerShell or CMD) and run `wsl --set-default-version 1` to set future WSL installations to Version 1.
 
 4. Install **Ubuntu 18.04, 20.04, or 22.04 LTS** from the **Microsoft Store**.
    - Open up the application and wait a few minutes.
@@ -40,7 +46,7 @@ If you are using websites that were previously set up on your local, make sure t
      - Retype new password: `ubuntu`
      
 5. **Important:** Double check and make sure you are on WSL Version 1.
-     - To check, Open Windows Terminal and run `wsl -l -v`
+     - To check, Open Windows Terminal (PowerShell or CMD) and run `wsl -l -v`
        - Run `wsl --set-version Ubuntu-18.04 1` if Ubuntu 18.04 is not on Version 1
        - Run `wsl --set-version Ubuntu-20.04 1` if Ubuntu 20.04 is not on Version 1
        - Run `wsl --set-version Ubuntu-22.04 1` if Ubuntu 22.04 is not on Version 1
@@ -48,7 +54,7 @@ If you are using websites that were previously set up on your local, make sure t
 
 # LAMP Setup Installation
 
-Run the following commands to download and run the LAMP setup script!
+Run the following commands in your Linux command line to download and run the LAMP setup script!
 
 ```
 cd
@@ -58,7 +64,7 @@ sudo bash setup.sh
 
 # Example Website Installation
 
-Run the following commands to download and run the website setup script!
+Run the following commands in your Linux command line to download and run the website setup script!
 
 ```
 cd
