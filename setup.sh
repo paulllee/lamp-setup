@@ -23,11 +23,7 @@ echo "Starting the setup for the Local LAMP Development Environment for Ubuntu $
 
 echo ''
 echo 'Please make sure you are on WSL Version 1 by going into Windows Terminal and running: wsl -l -v'
-echo ''
-echo 'If it is not on WSL Version 1 run:'
-echo 'For Ubuntu 18.04: wsl --set-version Ubuntu-18.04 1'
-echo 'For Ubuntu 20.04: wsl --set-version Ubuntu-20.04 1'
-echo 'For Ubuntu 22.04: wsl --set-version Ubuntu-22.04 1'
+echo "If it is not on WSL Version 1 run: wsl --set-version Ubuntu-$version 1"
 echo ''
 echo 'If you are on WSL Version 1, press Enter'
 read USER_CHECKPOINT
