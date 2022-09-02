@@ -20,7 +20,7 @@ If you are using websites that were previously set up on your local, make sure t
 
 # Prerequisites
 
-1. Open Turn Windows features on and off:
+1. Open **Turn Windows features on and off**:
    - Disable HYPER-V (*HYPER-V breaks WordPress sites*)
    - Disable HYPER-V Platform
    - Enable Virtual Machine Platform
@@ -28,7 +28,7 @@ If you are using websites that were previously set up on your local, make sure t
    
 2. Restart the computer.
 
-3. Install “Ubuntu 18.04.5 LTS” from the Microsoft Store.
+3. Install **Ubuntu 18.04.5 LTS** from the **Microsoft Store**.
    - Open up the application and wait a few minutes.
    - Once a prompt appears, input the following:
      - Enter new UNIX username: `ubuntu`
