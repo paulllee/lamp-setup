@@ -2,7 +2,7 @@
 
 a lamp environment setup script on Ubuntu WSL1 for Lyquix
 
-all versions of Ubuntu that are available on the **Microsoft Store** are compatible: 18.04, 20.04, and 22.04
+(as of *September 2nd, 2022*) all versions of Ubuntu that are available on the **Microsoft Store** are compatible: 18.04, 20.04, and 22.04
 
 # Important Information
 
@@ -39,11 +39,11 @@ If you are using websites that were previously set up on your local, make sure t
      - New password: `ubuntu`
      - Retype new password: `ubuntu`
      
-5. **Important:** Make sure you are on WSL Version 1.
+5. **Important:** Double check and make sure you are on WSL Version 1.
      - To check, Open Windows Terminal and run `wsl -l -v`
-       - Run `wsl --set-version Ubuntu-18.04 1` if the Ubuntu 18.04 is not on Version 1
-       - Run `wsl --set-version Ubuntu-20.04 1` if the Ubuntu 20.04 is not on Version 1
-       - Run `wsl --set-version Ubuntu-22.04 1` if the Ubuntu 22.04 is not on Version 1
+       - Run `wsl --set-version Ubuntu-18.04 1` if Ubuntu 18.04 is not on Version 1
+       - Run `wsl --set-version Ubuntu-20.04 1` if Ubuntu 20.04 is not on Version 1
+       - Run `wsl --set-version Ubuntu-22.04 1` if Ubuntu 22.04 is not on Version 1
      - In our use case, WSL Version 1 is ideal since our websites are stored in the Windows file system which runs faster over WSL Version 2.
 
 # LAMP Setup Installation
