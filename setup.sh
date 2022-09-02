@@ -12,11 +12,23 @@ then
 fi
 
 version="$(lsb_release -sr)"
+if [ $version != '18.04' ] && [ $version != '20.04' ] && [ $version != '22.04' ]
+then
+	echo "Ubuntu $version is not supported"
+	echo "please run on Ubuntu 18.04, 20.04, or 22.04 LTS - WSL1"
+	exit
+fi
+
 echo "Starting the setup for the Local LAMP Development Environment for Ubuntu $version - WSL1"
 
 echo ''
 echo 'Please make sure you are on WSL Version 1 by going into Windows Terminal and running: wsl -l -v'
-echo 'If it is not on WSL Version 1, run: wsl --set-version Ubuntu-__.__ 1'
+echo ''
+echo 'If it is not on WSL Version 1 run:'
+echo 'For Ubuntu 18.04: wsl --set-version Ubuntu-18.04 1'
+echo 'For Ubuntu 20.04: wsl --set-version Ubuntu-20.04 1'
+echo 'For Ubuntu 22.04: wsl --set-version Ubuntu-22.04 1'
+echo ''
 echo 'If you are on WSL Version 1, press Enter'
 read USER_CHECKPOINT
 
@@ -158,7 +170,6 @@ sed -i 's/Require all denied/Require all granted/g' /etc/apache2/mods-available/
 
 echo 'Installing MySQL'
 
-version="$(lsb_release -sr)"
 if [ $version = '18.04' ]
 then
 	curl -o /etc/profile.d/wsl-integration.sh https://raw.githubusercontent.com/canonical/ubuntu-wsl-integration/master/wsl-integration.sh
