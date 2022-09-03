@@ -72,6 +72,16 @@ curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh
 sudo bash website-setup.sh
 ```
 
+# Website Fix for Outdated Lyquix Templates
+
+Run the following commands in your Linux command line to download and run the website fix script!
+
+```
+cd
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-fix.sh -o website-fix.sh
+sudo bash website-fix.sh
+```
+
 # hosts file
 
 1. Run Notepad as administrator
