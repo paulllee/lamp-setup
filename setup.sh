@@ -142,7 +142,7 @@ sed -i '/AddOutputFilterByType DEFLATE application\/xml/r deflateconf-nl' /etc/a
 
 sed -i '/AddType application\/x-gzip .tgz/r mimeconf-nl' /etc/apache2/mods-available/mime.conf
 
-sed -i '/}/r apache2-nl' /etc/logrotate.d/apache2
+sed -i '$r apache2-nl' /etc/logrotate.d/apache2
 
 echo 'Installing mod_pagespeed'
 curl -O https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
@@ -164,7 +164,14 @@ done
 php_version="$(php -r 'echo substr(phpversion(),0,3);')"
 
 sed -i 's/max_execution_time = 30/max_execution_time = 60/' /etc/php/$php_version/apache2/php.ini
-sed -i 's/; max_input_vars = 1000/max_input_vars = 5000/' /etc/php/$php_version/apache2/php.ini
+
+if [ $version != '18.04' ]
+then
+	sed -i 's/;max_input_vars = 1000/max_input_vars = 5000/' /etc/php/$php_version/apache2/php.ini
+else
+	sed -i 's/; max_input_vars = 1000/max_input_vars = 5000/' /etc/php/$php_version/apache2/php.ini
+fi
+
 sed -i 's/memory_limit = 128M/memory_limit = 256M/' /etc/php/$php_version/apache2/php.ini
 sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_ALL \& \~E_NOTICE \& \~E_STRICT \& \~E_DEPRECATED/' /etc/php/$php_version/apache2/php.ini
 sed -i 's/post_max_size = 8M/post_max_size = 20M/' /etc/php/$php_version/apache2/php.ini
@@ -230,10 +237,21 @@ apt-get -y remove expect
 
 echo 'Configuring MySQL files'
 
-sed -i 's/#table_open_cache/table_open_cache/' /etc/mysql/mysql.conf.d/mysqld.cnf
-sed -i 's/#slow_query_log/slow_query_log/' /etc/mysql/mysql.conf.d/mysqld.cnf
-sed -i 's/#slow_query_log_file/slow_query_log_file/' /etc/mysql/mysql.conf.d/mysqld.cnf
-sed -i 's/#long_query_time = 2/long_query_time = 1/' /etc/mysql/mysql.conf.d/mysqld.cnf
+if [ $version != '18.04' ]
+then
+	sed -i 's/# max_allowed_packet    = 64M/max_allowed_packet    = 16M/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/# thread_stack          = 256K/thread_stack          = 192K/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/# thread_cache_size       = -1/thread_cache_size       = 8/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/# table_open_cache       = 4000/table_open_cache       = 64/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/# slow_query_log/slow_query_log/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/# slow_query_log_file/slow_query_log_file/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/# long_query_time = 2/long_query_time = 1/' /etc/mysql/mysql.conf.d/mysqld.cnf
+else
+	sed -i 's/#table_open_cache/table_open_cache/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/#slow_query_log/slow_query_log/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/#slow_query_log_file/slow_query_log_file/' /etc/mysql/mysql.conf.d/mysqld.cnf
+	sed -i 's/#long_query_time = 2/long_query_time = 1/' /etc/mysql/mysql.conf.d/mysqld.cnf
+fi
 
 service mysql restart
 
