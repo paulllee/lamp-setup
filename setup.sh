@@ -32,6 +32,12 @@ echo ''
 echo 'Checking for updates then upgrading'
 apt-get update && apt-get -y upgrade
 
+if [ $version == '22.04' ]
+then
+	echo "Ubuntu $version only: removing needrestart package"
+	apt-get -y purge needrestart
+fi
+
 echo 'Creating a /var/www directory and assigning permissions'
 
 if [ -d /var/www ]
@@ -155,14 +161,16 @@ do
 	apt-get -y install ${PCKG}
 done
 
-sed -i 's/max_execution_time = 30/max_execution_time = 60/' /etc/php/7.2/apache2/php.ini
-sed -i 's/; max_input_vars = 1000/max_input_vars = 5000/' /etc/php/7.2/apache2/php.ini
-sed -i 's/memory_limit = 128M/memory_limit = 256M/' /etc/php/7.2/apache2/php.ini
-sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_ALL \& \~E_NOTICE \& \~E_STRICT \& \~E_DEPRECATED/' /etc/php/7.2/apache2/php.ini
-sed -i 's/post_max_size = 8M/post_max_size = 20M/' /etc/php/7.2/apache2/php.ini
-sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/' /etc/php/7.2/apache2/php.ini
+php_version="$(php -r 'echo substr(phpversion(),0,3);')"
 
-sed -i 's/Require all denied/Require all granted/g' /etc/apache2/mods-available/php7.2.conf
+sed -i 's/max_execution_time = 30/max_execution_time = 60/' /etc/php/$php_version/apache2/php.ini
+sed -i 's/; max_input_vars = 1000/max_input_vars = 5000/' /etc/php/$php_version/apache2/php.ini
+sed -i 's/memory_limit = 128M/memory_limit = 256M/' /etc/php/$php_version/apache2/php.ini
+sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_ALL \& \~E_NOTICE \& \~E_STRICT \& \~E_DEPRECATED/' /etc/php/$php_version/apache2/php.ini
+sed -i 's/post_max_size = 8M/post_max_size = 20M/' /etc/php/$php_version/apache2/php.ini
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 20M/' /etc/php/$php_version/apache2/php.ini
+
+sed -i 's/Require all denied/Require all granted/g' /etc/apache2/mods-available/php$php_version.conf
 
 echo 'Installing MySQL'
 
@@ -231,7 +239,7 @@ service mysql restart
 
 service apache2 restart
 
-sudo apt-get -y autoremove
+apt-get -y autoremove
 
 rm *-nl
 
