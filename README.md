@@ -22,6 +22,10 @@ If you decide to run multiple instances of Ubuntu, I highly recommend only runni
 
 Before opening a new instance, you should terminate ALL running instances of Ubuntu by using `wsl --shutdown` in Windows Terminal (PowerShell or CMD).
 
+### Outdated Lyquix Templates
+
+If the website is running an outdated Lyquix Template and you are running into load time issues, I recommend running the [website-fix.sh script](#website-fix-for-outdated-lyquix-templates).
+
 # Before You Start
 
 If you are using websites that were previously set up on your local, make sure to create a backup of **ALL** databases.
