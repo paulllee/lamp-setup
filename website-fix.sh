@@ -69,4 +69,6 @@ sed -i '/curl_close($curl);/{
 
 rm jsphp-fix
 
+cd
+
 echo "The fix has been applied for $WEBSITE_ADDRESS"
