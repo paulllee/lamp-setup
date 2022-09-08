@@ -48,7 +48,7 @@ echo 'YES for it is installed / NO for it is not installed (case sensitive):'
 read USER_VERIFIED
     if [ "$USER_VERIFIED" != 'YES' ]
     then
-        echo "First install the website onto your local before running the fix"
+        echo "First install the $WEBSITE_ADDRESS onto your local before running the fix"
         echo ''
         echo 'curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh'
         echo 'sudo bash website-setup.sh'
