@@ -190,6 +190,12 @@ then
     echo "https://$WEBSITE_DOMAIN_NAME.test → http://$WEBSITE_DOMAIN_NAME.test"
     echo ''
     echo "If there are any errors, you can ignore them. They don't affect the search and replace."
+    echo ''
+    echo "If $WEBSITE_DOMAIN_NAME is on an outdated template, run the website-fix.sh script to update the js.php file:"
+    echo ''
+    echo 'curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-fix.sh -o website-fix.sh'
+    echo 'sudo bash website-fix.sh'
+    echo ''
 else
     sudo service mysql start
     sudo service apache2 start
@@ -197,4 +203,4 @@ else
 fi
 
 echo ''
-echo 'The full installation of the website is now complete!'
+echo "The full installation of the $WEBSITE_DOMAIN_NAME is now complete!"
