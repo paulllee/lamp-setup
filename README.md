@@ -22,6 +22,8 @@ If you decide to run multiple instances of Ubuntu, I highly recommend only runni
 
 Before opening a new instance, you should terminate ALL running instances of Ubuntu by using `wsl --shutdown` in Windows Terminal (PowerShell or CMD).
 
+Do not install the same website onto multiple instances of Ubuntu.
+
 ### Outdated Lyquix Templates
 
 If the website is running an outdated Lyquix Template and you are running into load time issues, I recommend running the [website-fix.sh script](#website-fix-for-outdated-lyquix-templates).
@@ -74,16 +76,6 @@ Run the following commands in your Linux command line to download and run the we
 cd
 curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-setup.sh -o website-setup.sh
 sudo bash website-setup.sh
-```
-
-# Website Fix for Outdated Lyquix Templates
-
-Run the following commands in your Linux command line to download and run the website fix script!
-
-```
-cd
-curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-fix.sh -o website-fix.sh
-sudo bash website-fix.sh
 ```
 
 # hosts file
