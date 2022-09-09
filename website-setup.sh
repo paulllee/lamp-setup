@@ -14,9 +14,6 @@ fi
 echo 'Starting the Setup for Local Websites'
 echo 'IF FIREWALL IS PROMPTED, allow BOTH public and private networks'
 
-echo ''
-echo "I will ask you to verify that the credentials are correct at the end if you mess up"
-
 USER_VERIFIED=NO
 while [ "$USER_VERIFIED" != 'YES' ]
 do
@@ -31,8 +28,7 @@ do
     echo ''
     echo "WEBSITE DOMAIN NAME=$WEBSITE_DOMAIN_NAME"
     echo "WEBSITE DOMAIN EXTENSION=$WEBSITE_DOMAIN_EXTENSION"
-    echo 'Can you verify that the credentials above is correct?'
-    echo 'YES for correct / NO for not correct (case sensitive):'
+    echo 'Are the the credentials above correct? YES or NO (case sensitive):'
     read USER_VERIFIED
     if [ "$USER_VERIFIED" == '' ]
     then
@@ -74,9 +70,7 @@ HAS_DATABASE=NULL
 while [ "$HAS_DATABASE" != 'YES' ] && [ "$HAS_DATABASE" != 'NO' ]
 do
     echo ''
-    echo "Does $WEBSITE_ADDRESS have a Content Management System (CMS) or require a database?"
-    echo ''
-    echo 'YES for correct / NO for not correct (case sensitive):'
+    echo "Does $WEBSITE_ADDRESS use a Content Management System (CMS)? YES or NO (case sensitive):"
     read HAS_DATABASE
     if [ "$HAS_DATABASE" == '' ]
     then
@@ -84,12 +78,29 @@ do
     fi
 done
 
+if [ "$HAS_DATABASE" == 'YES' ]
+then
+    CMS_TYPE=NULL
+    while [ "$CMS_TYPE" != 'JOOMLA' ] && [ "$CMS_TYPE" != 'WORDPRESS' ]
+    do
+        echo ''
+        echo "Does $WEBSITE_ADDRESS use JOOMLA or WORDPRESS (case sensitive)?:"
+        read CMS_TYPE
+        if [ "$CMS_TYPE" == '' ]
+        then
+            CMS_TYPE=NULL
+        fi
+    done
+fi
+
+# SourceTree to clone repo
 echo ''
 echo "Next: open up SourceTree and clone the $WEBSITE_ADDRESS repo into the public_html directory"
 echo ''
 echo 'When you are done press Enter'
 read USER_CHECKPOINT
 
+# SSH for MySQL dump
 if [ "$HAS_DATABASE" == 'YES' ]
 then
     echo ''
@@ -108,6 +119,7 @@ then
     read USER_CHECKPOINT
 fi
 
+# FTP using FileZilla to retrieve necessary files
 echo ''
 if [ "$HAS_DATABASE" == 'YES' ]
 then
@@ -136,15 +148,15 @@ then
     while [ "$USER_VERIFIED" != 'YES' ]
     do
         echo ''
-        echo 'Type in the MySQL database name for this site:'
+        echo "Type in the MySQL database name for $WEBSITE_ADDRESS:"
         read DATABASE_NAME
 
         echo ''
-        echo 'Type in the MySQL database username for this site:'
+        echo "Type in the MySQL database username for $WEBSITE_ADDRESS:"
         read DATABASE_USER
 
         echo ''
-        echo 'Type in the MySQL database password for this site:'
+        echo "Type in the MySQL database password for $WEBSITE_ADDRESS:"
         read DATABASE_PASS
 
         echo ''
@@ -156,8 +168,7 @@ then
         echo "DATABASE USERNAME=$DATABASE_USER"
         echo "DATABASE PASSWORD=$DATABASE_PASS"
         echo "SQL FILE NAME=$SQL_FILE"
-        echo 'Can you verify that the credentials above is correct?'
-        echo 'YES for correct / NO for not correct (case sensitive):'
+        echo 'Are the credentials above correct? YES or NO (case sensitive):'
         read USER_VERIFIED
         if [ "$USER_VERIFIED" == '' ]
         then
