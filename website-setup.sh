@@ -184,29 +184,46 @@ then
 
     mysql --user="$DATABASE_USER" --password="$DATABASE_PASS" --database="$DATABASE_NAME" < $SQL_FILE
 
-    cd
+    if [ "$CMS_TYPE" == 'WORDPRESS' ]
+    then
+        cd public_html
 
-    sudo service mysql start
-    sudo service apache2 start
-    sudo service apache2 restart    
+        if [[ $(command -v unzip) ]]
+        then
+            echo ''
+            echo 'unzip is already installed'
+        else
+            apt-get update
+            apt-get -y install unzip
+        fi
 
-    echo ''
-    echo 'If you just installed a WordPress site, additional steps need to be taken care of. (ONLY APPLIES TO WORDPRESS)'
-    echo '1. Download Search-Replace-DB and put it in the root public_html directory'
-    echo "2. Go to the $WEBSITE_DOMAIN_NAME.test/Search-Replace-DB url."
-    echo '3. Change all instances of the url for dev for the test url and protocol'
-    echo ''
-    echo 'for example (do these separately):'
-    echo "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION → $WEBSITE_DOMAIN_NAME.test"
-    echo "https://$WEBSITE_DOMAIN_NAME.test → http://$WEBSITE_DOMAIN_NAME.test"
-    echo ''
-    echo "If there are any errors, you can ignore them. They don't affect the search and replace."
+        curl -L https://github.com/interconnectit/Search-Replace-DB/archive/refs/tags/4.1.2.zip -o srdb.zip
+        unzip srdb.zip
+        rm -f srdb.zip
+
+        cd Search-Replace-DB*
+
+        version="$(lsb_release -sr)"
+        if [ $version != '18.04' ]
+        then
+            # Ubuntu 20+ had a change in hostname for MySQL
+            php srdb.cli.php -h 127.0.0.1 -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
+            php srdb.cli.php -h 127.0.0.1 -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
+        else
+            php srdb.cli.php -h localhost -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
+            php srdb.cli.php -h localhost -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
+        fi
+    fi
+
     echo ''
     echo "If $WEBSITE_DOMAIN_NAME is on an outdated template, run the website-fix.sh script to update the js.php file:"
     echo ''
     echo 'curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-fix.sh -o website-fix.sh'
     echo 'sudo bash website-fix.sh'
-    echo ''
+
+    sudo service mysql start
+    sudo service apache2 start
+    sudo service apache2 restart   
 else
     sudo service mysql start
     sudo service apache2 start
