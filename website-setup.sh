@@ -184,10 +184,11 @@ then
 
     mysql --user="$DATABASE_USER" --password="$DATABASE_PASS" --database="$DATABASE_NAME" < $SQL_FILE
 
+    cd public_html
+
+    version="$(lsb_release -sr)"
     if [ "$CMS_TYPE" == 'WORDPRESS' ]
     then
-        cd public_html
-
         if [[ $(command -v unzip) ]]
         then
             echo ''
@@ -203,23 +204,54 @@ then
 
         cd Search-Replace-DB*
 
-        version="$(lsb_release -sr)"
         if [ $version != '18.04' ]
         then
             # Ubuntu 20+ had a change in hostname for MySQL
             php srdb.cli.php -h 127.0.0.1 -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
             php srdb.cli.php -h 127.0.0.1 -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
+
+            cd ..
+            sed -i 's/localhost/127.0.0.1/' wp-config.php
         else
             php srdb.cli.php -h localhost -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
             php srdb.cli.php -h localhost -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
+
+            cd ..
+            sed -i 's/127.0.0.1/localhost/' wp-config.php
+        fi
+
+    elif [ "$CMS_TYPE" == 'JOOMLA' ]
+    then
+        if [ $version != '18.04' ]
+        then
+            sed -i 's/localhost/127.0.0.1/' configuration.php
+        else
+            sed -i 's/127.0.0.1/localhost/' configuration.php
         fi
     fi
 
-    echo ''
-    echo "If $WEBSITE_DOMAIN_NAME is on an outdated template, run the website-fix.sh script to update the js.php file:"
-    echo ''
-    echo 'curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/website-fix.sh -o website-fix.sh'
-    echo 'sudo bash website-fix.sh'
+    JS_PATH="$(find /srv/www/$WEBSITE_ADDRESS/ -name 'js.php')"
+    
+    if grep -q "\$curl" "$JS_PATH"
+    then
+        echo ''
+        echo 'The Lyquix template has the js.php curl fix'
+    else
+        curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/config-templates/jsphp-fix -o jsphp-fix
+
+        sed -i '/ Remote script: /r jsphp-fix' $JS_PATH
+        sed -i '/curl_close($curl);/{
+            n
+            d
+            }' $JS_PATH
+
+        rm jsphp-fix
+
+        echo ''
+        echo 'The Lyquix template has been updated with the js.php curl fix'
+        echo 'Do not discard the changes of this file in SourceTree'
+        echo 'You have to keep the changes in the js.php file'
+    fi
 
     sudo service mysql start
     sudo service apache2 start
