@@ -26,7 +26,7 @@ Do not install the same website onto multiple instances of Ubuntu.
 
 ### Outdated Lyquix Templates
 
-If the website is running an outdated Lyquix Template and you are running into load time issues, I recommend running the [website-fix.sh script](#website-fix-for-outdated-lyquix-templates).
+If a website is running an outdated Lyquix Template, the [website-setup.sh script](website-setup.sh) will automatically patch a fix. Do not discard the changes in Git.
 
 # Before You Start
 
