@@ -198,35 +198,32 @@ then
             apt-get -y install unzip
         fi
 
+        if [ $version != '18.04' ]
+        then
+            HOST_NAME=127.0.0.1
+            # Ubuntu 20+ uses 127.0.0.1
+            sed -i 's/localhost/127.0.0.1/' wp-config.php
+        else
+            # Ubuntu 18 uses localhost
+            HOST_NAME=localhost
+            sed -i 's/127.0.0.1/localhost/' wp-config.php
+        fi
+
         curl -L https://github.com/interconnectit/Search-Replace-DB/archive/refs/tags/4.1.2.zip -o srdb.zip
         unzip srdb.zip
         rm -f srdb.zip
 
         cd Search-Replace-DB*
-
-        if [ $version != '18.04' ]
-        then
-            # Ubuntu 20+ had a change in hostname for MySQL
-            php srdb.cli.php -h 127.0.0.1 -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
-            php srdb.cli.php -h 127.0.0.1 -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
-
-            cd ..
-            sed -i 's/localhost/127.0.0.1/' wp-config.php
-        else
-            php srdb.cli.php -h localhost -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
-            php srdb.cli.php -h localhost -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
-
-            cd ..
-            sed -i 's/127.0.0.1/localhost/' wp-config.php
-        fi
+        php srdb.cli.php -h $HOST_NAME -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
+        php srdb.cli.php -h $HOST_NAME -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
 
     elif [ "$CMS_TYPE" == 'JOOMLA' ]
     then
         if [ $version != '18.04' ]
         then
-            sed -i 's/localhost/127.0.0.1/' configuration.php
+            sed -i "s/host = 'localhost'/host = '127.0.0.1'/" configuration.php
         else
-            sed -i 's/127.0.0.1/localhost/' configuration.php
+            sed -i "s/host = '127.0.0.1'/host = 'localhost'/" configuration.php
         fi
     fi
 
