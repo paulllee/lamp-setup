@@ -127,6 +127,7 @@ then
     echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
     echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
     echo 'Look through the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla) files and modify the values to work for your local if needed (ex: check any forcing for ssl, any directory paths...)'
+    echo 'Do not change the database host value for wp-config.php or configuration.php, that will be fixed later in the script'
 else
     echo "FTP (using FileZilla) into the server as www-data user: use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory" 
     echo 'Look through the .htaccess file and modify the values to work for your local (ex: check any forcing for ssl...)'
@@ -140,9 +141,6 @@ then
     echo ''
     echo "Press Enter if you confirm the sql file is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
     read USER_CHECKPOINT
-
-    echo ''
-    echo "I will ask you to verify that the credentials are correct at the end if you mess up"
 
     USER_VERIFIED=NO
     while [ "$USER_VERIFIED" != 'YES' ]
