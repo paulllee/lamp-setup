@@ -171,6 +171,7 @@ then
     echo ''
     echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
     echo 'Look through the .htaccess and modify/remove the values to work for your local if needed (ex: check for redirecting and forcing ssl, password protection, ModPageSpeed must be turned Off)'
+    echo "You do NOT have to edit wp-config.php (WordPress) or configuration.php (Joomla), they will be automatically updated later in the script!"
     echo ''
     echo 'When you are done press Enter'
     read USER_CHECKPOINT
