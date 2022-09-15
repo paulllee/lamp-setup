@@ -1,6 +1,6 @@
 <VirtualHost *:80>
-        ServerName example.test
-        DocumentRoot /srv/www/example.extension/public_html/
-        ErrorLog /srv/www/example.extension/logs/error.log
-        CustomLog /srv/www/example.extension/logs/access.log combined
+        ServerName domain.test
+        DocumentRoot /srv/www/domain.extension/public_html/
+        ErrorLog /srv/www/domain.extension/logs/error.log
+        CustomLog /srv/www/domain.extension/logs/access.log combined
 </VirtualHost>
