@@ -22,11 +22,16 @@ do
     read WEBSITE_DOMAIN_NAME
 
     echo ''
+    echo 'Enter the development website subdomain NAME including the period (ex: dev.):'
+    read WEBSITE_SUBDOMAIN_NAME
+
+    echo ''
     echo 'Enter the production website domain EXTENSION including the period (ex: .com):'
     read WEBSITE_DOMAIN_EXTENSION
 
     echo ''
     echo "WEBSITE DOMAIN NAME=$WEBSITE_DOMAIN_NAME"
+    echo "DEVELOPMENT WEBSITE SUBDOMAIN NAME=$WEBSITE_SUBDOMAIN_NAME"
     echo "WEBSITE DOMAIN EXTENSION=$WEBSITE_DOMAIN_EXTENSION"
     echo 'Are the the credentials above correct? YES or NO (case sensitive):'
     read USER_VERIFIED
