@@ -176,7 +176,7 @@ then
     read USER_CHECKPOINT
 
     echo ''
-    echo "Press Enter if you confirm the sql file is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
+    echo "Press Enter if you confirm that $SQL_FILE is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
     read USER_CHECKPOINT
 
     # Inserting remote MySQL dump into local MySQL table
