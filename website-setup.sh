@@ -230,6 +230,13 @@ then
         else
             sed -i "s/host = '127.0.0.1'/host = 'localhost'/" configuration.php
         fi
+        # replacing all dev. addresses to test addresses
+        sed -i "s/$WEBSITE_SUBDOMAIN_NAME$WEBSITE_ADDRESS/$WEBSITE_ADDRESS/g" configuration.php
+        # disabling ssl
+        sed -i "s/force_ssl = '1'/force_ssl = '0'/" configuration.php
+        sed -i "s/force_ssl = '2'/force_ssl = '0'/" configuration.php
+        # cookie domain to test address
+        sed -i "s/cookie_domain = '$WEBSITE_SUBDOMAIN_NAME$WEBSITE_ADDRESS'/cookie_domain = '$WEBSITE_DOMAIN_NAME.test'/" configuration.php
     fi
 
     JS_PATH="$(find /srv/www/$WEBSITE_ADDRESS/ -name 'js.php')"
