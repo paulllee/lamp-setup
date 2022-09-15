@@ -168,9 +168,9 @@ then
     # FTP using FileZilla to retrieve necessary files
     echo "FTP (using FileZilla) into the server as www-data user: download the sql file to the www/$WEBSITE_ADDRESS/ directory"
     echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
+    echo ''
     echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
-    echo 'Look through the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla) files and modify the values to work for your local if needed (ex: check any forcing for ssl, any directory paths...)'
-    echo 'Do not change the database host value for wp-config.php or configuration.php, that will be fixed later in the script'
+    echo 'Look through the .htaccess and modify/remove the values to work for your local if needed (ex: check for redirecting and forcing ssl, password protection)'
     echo ''
     echo 'When you are done press Enter'
     read USER_CHECKPOINT
