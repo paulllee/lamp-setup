@@ -4,6 +4,7 @@
 # Company: Lyquix
 # Description: Automate the local website installation
 
+# conditional to check if root
 if [ $EUID != 0 ]
 then
     echo "please run this script as root, for example:"
@@ -14,6 +15,8 @@ fi
 echo 'Starting the Setup for Local Websites'
 echo 'IF FIREWALL IS PROMPTED, allow BOTH public and private networks'
 
+# asking user for website info
+# all info gathered from the user is ran through a while loop to check that the credentials are correct
 USER_VERIFIED=NO
 while [ "$USER_VERIFIED" != 'YES' ]
 do
@@ -43,34 +46,7 @@ done
 
 WEBSITE_ADDRESS=$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION
 
-echo ''
-echo "Setting up $WEBSITE_ADDRESS"
-
-echo ''
-mkdir -p /srv/www/$WEBSITE_ADDRESS/public_html
-mkdir /srv/www/$WEBSITE_ADDRESS/logs
-mkdir /srv/www/$WEBSITE_ADDRESS/ssl
-chown -R www-data:www-data /srv/www
-
-echo ''
-curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/config-templates/testconf-nl -o $WEBSITE_DOMAIN_NAME.test.conf
-echo "" >> $WEBSITE_DOMAIN_NAME.test.conf
-
-sed -i "s/example/$WEBSITE_DOMAIN_NAME/g" $WEBSITE_DOMAIN_NAME.test.conf
-sed -i "s/.extension/$WEBSITE_DOMAIN_EXTENSION/g" $WEBSITE_DOMAIN_NAME.test.conf
-
-mv $WEBSITE_DOMAIN_NAME.test.conf /etc/apache2/sites-available/
-
-echo ''
-cd /etc/apache2/sites-available/
-a2ensite $WEBSITE_DOMAIN_NAME.test.conf
-
-service apache2 restart
-
-cd
-
-echo "Returning to Home directory; finished setting up the apache2 configuration files for $WEBSITE_ADDRESS"
-
+# asking if website is using a CMS and if so, JOOMLA or WORDPRESS
 HAS_DATABASE=NULL
 while [ "$HAS_DATABASE" != 'YES' ] && [ "$HAS_DATABASE" != 'NO' ]
 do
@@ -98,6 +74,37 @@ then
     done
 fi
 
+echo ''
+echo "Setting up $WEBSITE_ADDRESS"
+
+# setting up the directories
+echo ''
+mkdir -p /srv/www/$WEBSITE_ADDRESS/public_html
+mkdir /srv/www/$WEBSITE_ADDRESS/logs
+mkdir /srv/www/$WEBSITE_ADDRESS/ssl
+chown -R www-data:www-data /srv/www
+
+# downloading the apache2 template config
+echo ''
+curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/config-templates/testconf-nl -o $WEBSITE_DOMAIN_NAME.test.conf
+echo "" >> $WEBSITE_DOMAIN_NAME.test.conf
+
+sed -i "s/domain/$WEBSITE_DOMAIN_NAME/g" $WEBSITE_DOMAIN_NAME.test.conf
+sed -i "s/.extension/$WEBSITE_DOMAIN_EXTENSION/g" $WEBSITE_DOMAIN_NAME.test.conf
+
+mv $WEBSITE_DOMAIN_NAME.test.conf /etc/apache2/sites-available/
+
+# enabling the test.conf
+echo ''
+cd /etc/apache2/sites-available/
+a2ensite $WEBSITE_DOMAIN_NAME.test.conf
+
+service apache2 restart
+
+cd
+
+echo "Returning to Home directory; finished setting up the apache2 configuration files for $WEBSITE_ADDRESS"
+
 # SourceTree to clone repo
 echo ''
 echo "Next: open up SourceTree and clone the $WEBSITE_ADDRESS repo into the public_html directory"
@@ -105,48 +112,9 @@ echo ''
 echo 'When you are done press Enter'
 read USER_CHECKPOINT
 
-# SSH for MySQL dump
 if [ "$HAS_DATABASE" == 'YES' ]
 then
-    echo ''
-    echo 'Then open up PuTTY or Windows Terminal and SSH as root on the client side (check passwork for credentials)'
-    echo 'If you use Windows Terminal, here is how to SSH in:'
-    echo ''
-    echo 'ssh root@clientaddress'
-    echo 'Enter password: (check PassWork)'
-    echo 'cd /srv/www/dev.____.___/'
-    echo 'mysqldump -u username -p username > databasename.sql'
-    echo ''
-    echo 'In some circumstances, you will need to use the --no-tablespaces flag:'
-    echo 'mysqldump -u root -p rothman_dev > rothman_dev04062022.sql --no-tablespaces'
-    echo ''
-    echo 'When you are done press Enter'
-    read USER_CHECKPOINT
-fi
-
-# FTP using FileZilla to retrieve necessary files
-echo ''
-if [ "$HAS_DATABASE" == 'YES' ]
-then
-    echo "FTP (using FileZilla) into the server as www-data user: download the sql file to the www/$WEBSITE_ADDRESS/ directory"
-    echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
-    echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
-    echo 'Look through the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla) files and modify the values to work for your local if needed (ex: check any forcing for ssl, any directory paths...)'
-    echo 'Do not change the database host value for wp-config.php or configuration.php, that will be fixed later in the script'
-else
-    echo "FTP (using FileZilla) into the server as www-data user: use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory" 
-    echo 'Look through the .htaccess file and modify the values to work for your local (ex: check any forcing for ssl...)'
-fi
-echo ''
-echo 'When you are done press Enter'
-read USER_CHECKPOINT
-
-if [ "$HAS_DATABASE" == 'YES' ]
-then
-    echo ''
-    echo "Press Enter if you confirm the sql file is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
-    read USER_CHECKPOINT
-
+    # asking for MySQL credentials
     USER_VERIFIED=NO
     while [ "$USER_VERIFIED" != 'YES' ]
     do
@@ -163,7 +131,7 @@ then
         read DATABASE_PASS
 
         echo ''
-        echo 'Type in the name of your sql file, including the .sql extension (ex: google_dev20220819.sql):'
+        echo 'Type in what you would like to name the sql file, including the .sql extension (ex: google_dev20220819.sql):'
         read SQL_FILE
 
         echo ''
@@ -179,6 +147,39 @@ then
         fi
     done
 
+    # SSH for MySQL dump
+    echo ''
+    echo 'Then open up PuTTY or Windows Terminal and SSH as root on the client side (check passwork for credentials)'
+    echo 'If you use Windows Terminal, here is how to SSH in:'
+    echo ''
+    echo "ssh root@$WEBSITE_ADDRESS"
+    echo 'Enter password: (check PassWork)'
+    echo "cd /srv/www/$WEBSITE_SUBDOMAIN_NAME$WEBSITE_ADDRESS/"
+    echo "mysqldump -u $DATABASE_USER -p $DATABASE_NAME > $SQL_FILE"
+    echo ''
+    echo 'In some circumstances, you will need to use the --no-tablespaces flag:'
+    echo "mysqldump -u $DATABASE_USER -p $DATABASE_NAME > $SQL_FILE --no-tablespaces"
+    echo 'or'
+    echo "mysqldump -u root -p $DATABASE_NAME > $SQL_FILE --no-tablespaces"
+    echo ''
+    echo 'When you are done press Enter'
+    read USER_CHECKPOINT
+
+    # FTP using FileZilla to retrieve necessary files
+    echo "FTP (using FileZilla) into the server as www-data user: download the sql file to the www/$WEBSITE_ADDRESS/ directory"
+    echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
+    echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
+    echo 'Look through the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla) files and modify the values to work for your local if needed (ex: check any forcing for ssl, any directory paths...)'
+    echo 'Do not change the database host value for wp-config.php or configuration.php, that will be fixed later in the script'
+    echo ''
+    echo 'When you are done press Enter'
+    read USER_CHECKPOINT
+
+    echo ''
+    echo "Press Enter if you confirm the sql file is in the C:/.../Documents/www/$WEBSITE_ADDRESS/ directory"
+    read USER_CHECKPOINT
+
+    # Inserting remote MySQL dump into local MySQL table
     cd /srv/www/$WEBSITE_ADDRESS/
 
     mysql --user="root" --password="ubuntu" --execute="CREATE DATABASE $DATABASE_NAME;"
@@ -187,6 +188,7 @@ then
 
     mysql --user="$DATABASE_USER" --password="$DATABASE_PASS" --database="$DATABASE_NAME" < $SQL_FILE
 
+    # updating necessary values and srdb for WORDPRESS websites
     cd public_html
 
     version="$(lsb_release -sr)"
@@ -257,6 +259,13 @@ then
     sudo service apache2 start
     sudo service apache2 restart   
 else
+    # FTP using FileZilla to retrieve necessary files for non-cms websites
+    echo "FTP (using FileZilla) into the server as www-data user: use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory" 
+    echo 'Look through the .htaccess file and modify the values to work for your local (ex: check any forcing for ssl...)'
+    echo ''
+    echo 'When you are done press Enter'
+    read USER_CHECKPOINT
+
     sudo service mysql start
     sudo service apache2 start
     sudo service apache2 restart
