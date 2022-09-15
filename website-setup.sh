@@ -219,7 +219,7 @@ then
         rm -f srdb.zip
 
         cd Search-Replace-DB*
-        php srdb.cli.php -h $HOST_NAME -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "dev.$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
+        php srdb.cli.php -h $HOST_NAME -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "$WEBSITE_SUBDOMAIN_NAME$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION" -r "$WEBSITE_DOMAIN_NAME.test"
         php srdb.cli.php -h $HOST_NAME -n $DATABASE_NAME -u $DATABASE_USER -p "$DATABASE_PASS" -s "https://$WEBSITE_DOMAIN_NAME.test" -r "http://$WEBSITE_DOMAIN_NAME.test"
 
     elif [ "$CMS_TYPE" == 'JOOMLA' ]
