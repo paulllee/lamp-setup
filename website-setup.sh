@@ -107,7 +107,7 @@ echo "Returning to Home directory; finished setting up the apache2 configuration
 
 # SourceTree to clone repo
 echo ''
-echo "Next: open up SourceTree and clone the $WEBSITE_ADDRESS repo into the public_html directory"
+echo "Next: open up SourceTree and clone the $WEBSITE_ADDRESS repo (development branch) into the public_html directory"
 echo ''
 echo 'When you are done press Enter'
 read USER_CHECKPOINT
