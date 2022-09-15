@@ -32,6 +32,7 @@ echo ''
 echo 'Checking for updates then upgrading'
 apt-get update && apt-get -y upgrade
 
+# this package causes interruptions during the setup script on 22.04
 if [ $version == '22.04' ]
 then
 	echo "Ubuntu $version only: removing needrestart package"
@@ -58,6 +59,7 @@ echo ''
 YOUR_WINDOWS_NAME=NULL
 VALIDNAME=TRUE
 
+# asks user for Windows username and checks if it exists
 while [ ! -d /mnt/c/Users/$YOUR_WINDOWS_NAME/ ]
 do
 	echo ''
