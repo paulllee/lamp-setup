@@ -170,7 +170,7 @@ then
     echo "You can use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory"
     echo ''
     echo "Make sure to have at least the .htaccess, wp-config.php (WordPress), and configuration.php (Joomla)"
-    echo 'Look through the .htaccess and modify/remove the values to work for your local if needed (ex: check for redirecting and forcing ssl, password protection)'
+    echo 'Look through the .htaccess and modify/remove the values to work for your local if needed (ex: check for redirecting and forcing ssl, password protection, ModPageSpeed must be turned Off)'
     echo ''
     echo 'When you are done press Enter'
     read USER_CHECKPOINT
