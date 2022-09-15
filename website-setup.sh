@@ -275,7 +275,7 @@ then
     else
         curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/config-templates/cssphp-fix -o cssphp-fix
 
-        sed -i '/ Remote script: /r cssphp-fix' $CSS_PATH
+        sed -i '/ Remote stylesheet: /r cssphp-fix' $CSS_PATH
         sed -i '/curl_close($curl);/{
             n
             d
