@@ -159,8 +159,9 @@ then
     echo ''
     echo 'In some circumstances, you will need to use the --no-tablespaces flag:'
     echo "mysqldump -u $DATABASE_USER -p $DATABASE_NAME > $SQL_FILE --no-tablespaces"
-    echo 'or'
-    echo "mysqldump -u root -p $DATABASE_NAME > $SQL_FILE --no-tablespaces"
+    echo ''
+    echo 'In some circumstances, you will need to be logged in as root user for MySQL:'
+    echo "mysqldump -u root -p $DATABASE_NAME > $SQL_FILE --no-tablespaces" 
     echo ''
     echo 'When you are done press Enter'
     read USER_CHECKPOINT
