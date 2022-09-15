@@ -182,6 +182,8 @@ then
     # Inserting remote MySQL dump into local MySQL table
     cd /srv/www/$WEBSITE_ADDRESS/
 
+    sudo service mysql start
+
     mysql --user="root" --password="ubuntu" --execute="CREATE DATABASE $DATABASE_NAME;"
     mysql --user="root" --password="ubuntu" --execute="CREATE USER '$DATABASE_USER'@localhost IDENTIFIED BY '$DATABASE_PASS';"
     mysql --user="root" --password="ubuntu" --execute="GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@localhost;"
@@ -262,7 +264,7 @@ then
         echo 'You have to keep the changes in the js.php file'
     fi
 
-    sudo service mysql start
+    sudo service mysql restart
     sudo service apache2 start
     sudo service apache2 restart   
 else
@@ -273,7 +275,7 @@ else
     echo 'When you are done press Enter'
     read USER_CHECKPOINT
 
-    sudo service mysql start
+    sudo service mysql restart
     sudo service apache2 start
     sudo service apache2 restart
 fi
