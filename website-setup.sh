@@ -295,7 +295,7 @@ then
 else
     # FTP using FileZilla to retrieve necessary files for non-cms websites
     echo "FTP (using FileZilla) into the server as www-data user: use the .gitignore file and download all the files that are ignored to the www/$WEBSITE_ADDRESS/public_html/ directory" 
-    echo 'Look through the .htaccess file and modify the values to work for your local (ex: check any forcing for ssl...)'
+    echo 'Look through the .htaccess and modify/remove the values to work for your local if needed (ex: check for redirecting and forcing ssl, password protection, ModPageSpeed must be turned Off)'
     echo ''
     echo 'When you are done press Enter'
     read USER_CHECKPOINT
