@@ -266,6 +266,29 @@ then
         echo 'You have to keep the changes in the js.php file'
     fi
 
+    CSS_PATH="$(find /srv/www/$WEBSITE_ADDRESS/ -name 'css.php')"
+    
+    if grep -q "\$curl" "$CSS_PATH"
+    then
+        echo ''
+        echo 'The Lyquix template has the css.php curl fix'
+    else
+        curl https://raw.githubusercontent.com/paulllee/lamp-setup/main/config-templates/cssphp-fix -o cssphp-fix
+
+        sed -i '/ Remote script: /r cssphp-fix' $CSS_PATH
+        sed -i '/curl_close($curl);/{
+            n
+            d
+            }' $CSS_PATH
+
+        rm cssphp-fix
+
+        echo ''
+        echo 'The Lyquix template has been updated with the css.php curl fix'
+        echo 'Do not discard the changes of this file in SourceTree'
+        echo 'You have to keep the changes in the css.php file'
+    fi
+
     sudo service mysql restart
     sudo service apache2 start
     sudo service apache2 restart   
