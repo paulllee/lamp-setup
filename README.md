@@ -18,7 +18,7 @@ This may seem redundant but is needed for WordPress sites:
 
 ### Multiple Instances of Ubuntu
 
-If you decide to run multiple instances of Ubuntu, I highly recommend only running **ONE** instance at a time.
+If you decide to run multiple instances of Ubuntu, you can only run **ONE** instance at a time.
 
 Before opening a new instance, you should terminate ALL running instances of Ubuntu by using `wsl --shutdown` in Windows Terminal (PowerShell or CMD).
 
