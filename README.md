@@ -56,7 +56,7 @@ If you are using websites that were previously set up on your local, make sure t
        - Run `wsl --set-version Ubuntu-18.04 1` if Ubuntu 18.04 is not on Version 1
        - Run `wsl --set-version Ubuntu-20.04 1` if Ubuntu 20.04 is not on Version 1
        - Run `wsl --set-version Ubuntu-22.04 1` if Ubuntu 22.04 is not on Version 1
-     - In our use case, WSL Version 1 is ideal since our websites are stored in the Windows file system which runs faster over WSL Version 2.
+     - In our use case, WSL Version 1 is ideal since our websites are stored in the Windows file system which runs faster than WSL Version 2.
 
 # LAMP Setup Installation
 
