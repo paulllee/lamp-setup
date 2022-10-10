@@ -25,7 +25,7 @@ do
     read WEBSITE_DOMAIN_NAME
 
     echo ''
-    echo 'Enter the development website subdomain NAME including the period (ex: dev.):'
+    echo 'Enter the development website subdomain NAME including the period if none, NA (ex: dev.):'
     read WEBSITE_SUBDOMAIN_NAME
 
     echo ''
@@ -43,6 +43,11 @@ do
         USER_VERIFIED=NO
     fi
 done
+
+if [ "$WEBSITE_SUBDOMAIN_NAME" == 'NA' ]
+then
+    WEBSITE_SUBDOMAIN_NAME = ''
+fi
 
 WEBSITE_ADDRESS=$WEBSITE_DOMAIN_NAME$WEBSITE_DOMAIN_EXTENSION
 
